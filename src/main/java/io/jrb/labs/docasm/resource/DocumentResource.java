@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import io.jrb.labs.docasm.model.Document;
+import io.jrb.labs.docasm.model.DocumentType;
 import io.jrb.labs.docasm.model.Projection;
 import lombok.Builder;
 import lombok.Singular;
@@ -48,6 +49,9 @@ public class DocumentResource {
 
     @JsonView(Projection.Summary.class)
     String name;
+
+    @JsonView(Projection.Summary.class)
+    DocumentType type;
 
     @JsonView(Projection.Detail.class)
     String createdBy;
@@ -73,6 +77,7 @@ public class DocumentResource {
         return DocumentResource.builder()
                 .guid(document.getGuid())
                 .name(document.getName())
+                .type(document.getType())
                 .createdBy(document.getCreatedBy())
                 .createdOn(document.getCreatedOn())
                 .modifiedBy(document.getModifiedBy())

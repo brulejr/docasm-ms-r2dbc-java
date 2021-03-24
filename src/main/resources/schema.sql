@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS t_document (
     do_id SERIAL PRIMARY KEY,
     do_guid UUID NOT NULL,
     do_name VARCHAR(64) NOT NULL,
+    do_type VARCHAR(64) NOT NULL,
     do_created_by VARCHAR(64),
     do_created_on TIMESTAMP,
     do_modified_by VARCHAR(64),

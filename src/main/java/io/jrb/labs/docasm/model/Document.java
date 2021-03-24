@@ -51,6 +51,9 @@ public class Document implements Entity {
     @Column(value = "do_guid")
     UUID guid;
 
+    @Column(value = "do_type")
+    DocumentType type;
+
     @Column(value = "do_name")
     String name;
 
@@ -73,7 +76,8 @@ public class Document implements Entity {
     public static DocumentBuilder fromResource(final DocumentResource documentResource) {
         return Document.builder()
                 .guid(documentResource.getGuid())
-                .name(documentResource.getName());
+                .name(documentResource.getName())
+                .type(documentResource.getType());
     }
 
     public static class DocumentBuilder implements EntityBuilder<Document, DocumentBuilder> {
