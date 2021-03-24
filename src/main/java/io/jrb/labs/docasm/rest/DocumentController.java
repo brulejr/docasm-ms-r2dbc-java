@@ -47,7 +47,7 @@ import reactor.core.publisher.Mono;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/document")
+@RequestMapping("/api/documents")
 @Slf4j
 public class DocumentController {
 

@@ -27,21 +27,19 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import io.jrb.labs.docasm.model.Document;
+import io.jrb.labs.docasm.model.DocumentSection;
 import io.jrb.labs.docasm.model.Projection;
 import lombok.Builder;
-import lombok.Singular;
 import lombok.Value;
 
 import java.time.Instant;
-import java.util.List;
 import java.util.UUID;
 
 @Value
 @Builder(toBuilder = true)
-@JsonDeserialize(builder = DocumentResource.DocumentResourceBuilder.class)
+@JsonDeserialize(builder = DocumentSectionResource.DocumentSectionResourceBuilder.class)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class DocumentResource {
+public class DocumentSectionResource {
 
     @JsonView(Projection.Summary.class)
     UUID guid;
@@ -61,26 +59,20 @@ public class DocumentResource {
     @JsonView(Projection.Detail.class)
     Instant modifiedOn;
 
-    @JsonView(Projection.Deep.class)
-    @Singular
-    List<String> tags;
-
-    @JsonView(Projection.Deep.class)
-    @Singular
-    List<DocumentSectionResource> sections;
-
-    public static DocumentResource.DocumentResourceBuilder fromEntity(final Document document) {
-        return DocumentResource.builder()
-                .guid(document.getGuid())
-                .name(document.getName())
-                .createdBy(document.getCreatedBy())
-                .createdOn(document.getCreatedOn())
-                .modifiedBy(document.getModifiedBy())
-                .modifiedOn(document.getModifiedOn());
+    public static DocumentSectionResource.DocumentSectionResourceBuilder fromEntity(
+            final DocumentSection documentSection
+    ) {
+        return DocumentSectionResource.builder()
+                .guid(documentSection.getGuid())
+                .name(documentSection.getName())
+                .createdBy(documentSection.getCreatedBy())
+                .createdOn(documentSection.getCreatedOn())
+                .modifiedBy(documentSection.getModifiedBy())
+                .modifiedOn(documentSection.getModifiedOn());
     }
 
     @JsonPOJOBuilder(withPrefix = "")
-    public static class DocumentResourceBuilder {
+    public static class DocumentSectionResourceBuilder {
     }
 
 }

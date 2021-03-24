@@ -49,6 +49,9 @@ dependencyManagement {
 	}
 }
 
+bootRun {
+}
+
 test {
 	useJUnitPlatform()
 	jacoco {

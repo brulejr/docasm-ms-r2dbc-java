@@ -25,16 +25,21 @@ package io.jrb.labs.docasm.repository;
 
 import io.jrb.labs.common.repository.EntityRepository;
 import io.jrb.labs.docasm.model.Document;
+import io.jrb.labs.docasm.model.DocumentSection;
 import org.springframework.data.r2dbc.repository.Query;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public interface DocumentRepository extends EntityRepository<Document>  {
+public interface DocumentSectionRepository extends EntityRepository<DocumentSection> {
 
-    @Query("select do_id, do_guid, do_name from t_document where do_guid = $1")
-    Mono<Document> findByGuid(String guid);
+    Mono<Void> deleteByDocumentId(Long documentId);
 
-    @Query("select task_id, guid, name, description from t_document where name = $1")
-    Flux<Document> findAllByName(String name);
+    Flux<DocumentSection> findAllByDocumentId(Long documentId);
+
+    @Query("select ds_id, ds_guid, ds_name from t_document_section where ds_guid = $1")
+    Mono<DocumentSection> findByGuid(String guid);
+
+    @Query("select task_id, guid, name, description from t_document_section where name = $1")
+    Flux<DocumentSection> findAllByName(String name);
 
 }

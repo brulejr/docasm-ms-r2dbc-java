@@ -16,3 +16,15 @@ CREATE TABLE IF NOT EXISTS t_document (
     do_modified_on TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS t_document_section (
+    ds_id SERIAL PRIMARY KEY,
+    ds_guid UUID NOT NULL,
+    ds_do_id NUMBER NOT NULL,
+    ds_name VARCHAR(64) NOT NULL,
+    ds_created_by VARCHAR(64),
+    ds_created_on TIMESTAMP,
+    ds_modified_by VARCHAR(64),
+    ds_modified_on TIMESTAMP,
+    FOREIGN KEY (ds_do_id) REFERENCES t_document(do_id)
+);
+
