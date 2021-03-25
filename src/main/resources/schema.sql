@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS t_document_section (
     ds_guid UUID NOT NULL,
     ds_do_id NUMBER NOT NULL,
     ds_name VARCHAR(64) NOT NULL,
+    ds_type VARCHAR(64) NOT NULL,
     ds_created_by VARCHAR(64),
     ds_created_on TIMESTAMP,
     ds_modified_by VARCHAR(64),

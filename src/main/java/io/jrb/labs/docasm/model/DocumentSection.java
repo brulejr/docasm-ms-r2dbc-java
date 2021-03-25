@@ -55,6 +55,9 @@ public class DocumentSection implements Entity {
     @Column(value = "ds_name")
     String name;
 
+    @Column(value = "ds_type")
+    DocumentSectionType type;
+
     @Column(value = "ds_do_id")
     Long documentId;
 
@@ -77,7 +80,8 @@ public class DocumentSection implements Entity {
     public static DocumentSectionBuilder fromResource(final DocumentSectionResource documentSectionResource) {
         return DocumentSection.builder()
                 .guid(documentSectionResource.getGuid())
-                .name(documentSectionResource.getName());
+                .name(documentSectionResource.getName())
+                .type(documentSectionResource.getType());
     }
 
     public static class DocumentSectionBuilder implements EntityBuilder<DocumentSection, DocumentSectionBuilder> {

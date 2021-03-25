@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import io.jrb.labs.docasm.model.DocumentSection;
+import io.jrb.labs.docasm.model.DocumentSectionType;
 import io.jrb.labs.docasm.model.Projection;
 import lombok.Builder;
 import lombok.Value;
@@ -47,6 +48,9 @@ public class DocumentSectionResource {
     @JsonView(Projection.Summary.class)
     String name;
 
+    @JsonView(Projection.Summary.class)
+    DocumentSectionType type;
+
     @JsonView(Projection.Detail.class)
     String createdBy;
 
@@ -65,6 +69,7 @@ public class DocumentSectionResource {
         return DocumentSectionResource.builder()
                 .guid(documentSection.getGuid())
                 .name(documentSection.getName())
+                .type(documentSection.getType())
                 .createdBy(documentSection.getCreatedBy())
                 .createdOn(documentSection.getCreatedOn())
                 .modifiedBy(documentSection.getModifiedBy())
