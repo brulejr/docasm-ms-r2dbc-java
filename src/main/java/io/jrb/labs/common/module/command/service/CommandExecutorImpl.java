@@ -24,7 +24,9 @@
 package io.jrb.labs.common.module.command.service;
 
 import io.jrb.labs.common.module.command.service.exception.CommandValidationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import javax.validation.ConstraintViolation;
@@ -35,6 +37,8 @@ import java.util.Set;
 /**
  * Provides a command executor that validates a request before executing the commmand with the validated data.
  */
+@Service
+@Slf4j
 public class CommandExecutorImpl implements CommandExecutor {
 
     private final ApplicationContext applicationContext;
@@ -56,7 +60,10 @@ public class CommandExecutorImpl implements CommandExecutor {
         final Command<R, T> command = applicationContext.getBean(commandClass);
         final Set<ConstraintViolation<R>> constraintViolations = validator.validate(request);
         if (constraintViolations.isEmpty()) {
-            return Mono.just(Instant.now())
+            return Mono.defer(() -> {
+                log.info("START command {} - request={}", commandClass, request);
+                return Mono.just(Instant.now());
+            })
                     .zipWith(command.execute(request))
                     .map(tuple -> {
                         final Instant startTimestamp = tuple.getT1();
@@ -66,6 +73,8 @@ public class CommandExecutorImpl implements CommandExecutor {
                                 .content(content)
                                 .endTimestamp(Instant.now())
                                 .build();
+                    }).doOnSuccess(response -> {
+                        log.info("COMPLETE command {} - request={}", commandClass, request);
                     });
         } else {
             return Mono.error(new CommandValidationException(constraintViolations));

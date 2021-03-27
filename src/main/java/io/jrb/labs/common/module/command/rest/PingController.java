@@ -21,22 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.jrb.labs.common.module.command.service.command;
+package io.jrb.labs.common.module.command.rest;
 
-import org.springframework.stereotype.Component;
+import io.jrb.labs.common.module.command.service.CommandExecutor;
+import io.jrb.labs.common.module.command.service.CommandResponseWrapper;
+import io.jrb.labs.common.module.command.service.command.PingCommand;
+import io.jrb.labs.common.module.command.service.command.PingRequest;
+import io.jrb.labs.common.module.command.service.command.PingResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
-import java.time.Instant;
+@RestController
+@RequestMapping("/ping")
+@Slf4j
+public class PingController {
 
-@Component
-public class PingCommandImpl implements PingCommand {
+    private final CommandExecutor commandExecutor;
 
-    @Override
-    public Mono<PingResponse> execute(final PingRequest request) {
-        final PingResponse response = PingResponse.builder()
-                .data(Instant.now())
-                .build();
-        return Mono.just(response);
+    public PingController(final CommandExecutor commandExecutor) {
+        this.commandExecutor = commandExecutor;
+    }
+
+    @GetMapping
+    public Mono<PingResponse> ping() {
+        return commandExecutor.execute(
+                PingCommand.class, PingRequest.builder().build()
+        ).map(CommandResponseWrapper::getContent);
     }
 
 }

@@ -21,22 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.jrb.labs.common.module.command.service.command;
+package io.jrb.labs.common.module.command;
 
-import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
-import java.time.Instant;
-
-@Component
-public class PingCommandImpl implements PingCommand {
-
-    @Override
-    public Mono<PingResponse> execute(final PingRequest request) {
-        final PingResponse response = PingResponse.builder()
-                .data(Instant.now())
-                .build();
-        return Mono.just(response);
-    }
-
+@Configuration
+@ComponentScan(basePackages = "io.jrb.labs.common.module.command")
+public class CommandModuleJavaConfig {
 }
