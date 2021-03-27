@@ -16,6 +16,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
@@ -55,6 +56,10 @@ class CommandExecutorImplTest {
         StepVerifier.create(commandExecutor.execute(PingCommand.class, request))
                 .expectNextMatches(result -> {
                     assertThat(result, is(notNullValue()));
+                    assertThat(result.getContent(), is(notNullValue()));
+                    assertThat(result.getStartTimestamp(), is(notNullValue()));
+                    assertThat(result.getEndTimestamp(), is(notNullValue()));
+                    assertThat(result.getElapsedTime(), is(greaterThanOrEqualTo(0L)));
                     return true;
                 })
                 .expectComplete()

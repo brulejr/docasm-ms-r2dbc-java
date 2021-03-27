@@ -23,25 +23,34 @@
  */
 package io.jrb.labs.common.module.command.service;
 
-import reactor.core.publisher.Mono;
+import lombok.Builder;
+import lombok.Value;
 
-/**
- * Defines an executor of commands.
- */
-public interface CommandExecutor {
+import java.time.Instant;
+import java.util.Optional;
 
-    /**
-     * Executes a command.
-     *
-     * @param commandClass the command class
-     * @param request the command request
-     * @param <R> the command request type
-     * @param <T> the command response type
-     * @return the command response
-     */
-    <R extends CommandRequest, T extends CommandResponse> Mono<CommandResponseWrapper<T>> execute(
-            Class<? extends Command<R, T>> commandClass,
-            R request
-    );
+@Value
+@Builder
+public class CommandResponseWrapper<T extends CommandResponse> {
+
+    T content;
+
+    Instant startTimestamp;
+
+    Instant endTimestamp;
+
+    public long getElapsedTime() {
+        final long startTimeEpochSecs = Optional.ofNullable(startTimestamp)
+                .map(Instant::getEpochSecond)
+                .orElse(0L);
+        if (startTimeEpochSecs > 0) {
+            final long endTimeEpochSecs = Optional.ofNullable(endTimestamp)
+                    .map(Instant::getEpochSecond)
+                    .orElse(0L);
+            return endTimeEpochSecs - startTimeEpochSecs;
+        } else {
+            return 0;
+        }
+    }
 
 }
