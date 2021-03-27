@@ -23,7 +23,7 @@
  */
 package io.jrb.labs.common.module.command.service.exception;
 
-import io.jrb.labs.common.module.command.service.ServiceRequest;
+import io.jrb.labs.common.module.command.service.CommandRequest;
 
 import javax.validation.ConstraintViolation;
 import java.util.Set;
@@ -32,13 +32,13 @@ public class CommandValidationException extends CommandException {
 
     private final Set<?> constraintViolations;
 
-    public <R extends ServiceRequest> CommandValidationException(final Set<ConstraintViolation<R>> constraintViolations) {
+    public <R extends CommandRequest> CommandValidationException(final Set<ConstraintViolation<R>> constraintViolations) {
         super();
         this.constraintViolations = constraintViolations;
     }
 
     @SuppressWarnings("unchecked")
-    public <R extends ServiceRequest> Set<ConstraintViolation<R>> getConstraintViolations() {
+    public <R extends CommandRequest> Set<ConstraintViolation<R>> getConstraintViolations() {
         return (Set<ConstraintViolation<R>>) constraintViolations;
     }
 

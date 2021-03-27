@@ -29,7 +29,6 @@ import reactor.core.publisher.Mono;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import java.time.Instant;
 import java.util.Set;
 
 /**
@@ -49,24 +48,14 @@ public class CommandExecutorImpl implements CommandExecutor {
     }
 
     @Override
-    public <R extends ServiceRequest<?>, T> Mono<ServiceResult<T>> execute(
+    public <R extends CommandRequest, T extends CommandResponse> Mono<T> execute(
             final Class<? extends Command<R, T>> commandClass,
             final R request
     ) {
         final Command<R, T> command = applicationContext.getBean(commandClass);
         final Set<ConstraintViolation<R>> constraintViolations = validator.validate(request);
         if (constraintViolations.isEmpty()) {
-            return Mono.just(Instant.now())
-                    .zipWith(command.execute(request))
-                    .map(tuple -> {
-                        final Instant startTime = tuple.getT1();
-                        final T data = tuple.getT2();
-                        return ServiceResult.<T>builder()
-                                .startTime(startTime)
-                                .data(data)
-                                .endTime(Instant.now())
-                                .build();
-                    });
+            return command.execute(request);
         } else {
             return Mono.error(new CommandValidationException(constraintViolations));
         }

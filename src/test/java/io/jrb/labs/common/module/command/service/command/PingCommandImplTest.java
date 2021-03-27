@@ -1,6 +1,5 @@
 package io.jrb.labs.common.module.command.service.command;
 
-import io.jrb.labs.common.module.command.service.ServiceRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import reactor.test.StepVerifier;
@@ -20,7 +19,7 @@ class PingCommandImplTest {
 
     @Test
     void testPingCommand() {
-        final ServiceRequest<?> request = ServiceRequest.builder().build();
+        final PingRequest request = PingRequest.builder().build();
         StepVerifier.create(command.execute(request))
                 .expectNextMatches(result -> {
                     assertThat(result, is(notNullValue()));

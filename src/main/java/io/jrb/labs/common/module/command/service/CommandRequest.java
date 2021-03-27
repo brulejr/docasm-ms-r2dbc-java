@@ -23,18 +23,9 @@
  */
 package io.jrb.labs.common.module.command.service;
 
-import lombok.Builder;
-import lombok.Value;
-
 /**
- * Provides a wrapper for a command service request.
- *
- * @param <T> the content type
+ * Marks a command request.
  */
-@Value
-@Builder
-public class ServiceRequest<T> {
-
-    T content;
+public interface CommandRequest {
 
 }

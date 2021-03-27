@@ -21,27 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.jrb.labs.common.module.command.service;
+package io.jrb.labs.common.module.command.service.command;
 
-import reactor.core.publisher.Mono;
+import io.jrb.labs.common.module.command.service.CommandResponse;
+import lombok.Builder;
+import lombok.Value;
 
-/**
- * Defines an executor of commands.
- */
-public interface CommandExecutor {
+import java.time.Instant;
 
-    /**
-     * Executes a command.
-     *
-     * @param commandClass the command class
-     * @param request the command request
-     * @param <R> the command request type
-     * @param <T> the command response type
-     * @return the command response
-     */
-    <R extends CommandRequest, T extends CommandResponse> Mono<T> execute(
-            Class<? extends Command<R, T>> commandClass,
-            R request
-    );
+@Value
+@Builder
+public class PingResponse implements CommandResponse {
+
+    Instant data;
 
 }

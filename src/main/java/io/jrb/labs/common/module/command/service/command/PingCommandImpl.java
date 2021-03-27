@@ -23,7 +23,6 @@
  */
 package io.jrb.labs.common.module.command.service.command;
 
-import io.jrb.labs.common.module.command.service.ServiceRequest;
 import reactor.core.publisher.Mono;
 
 import java.time.Instant;
@@ -31,8 +30,11 @@ import java.time.Instant;
 public class PingCommandImpl implements PingCommand {
 
     @Override
-    public Mono<Instant> execute(final ServiceRequest request) {
-        return Mono.just(Instant.now());
+    public Mono<PingResponse> execute(final PingRequest request) {
+        final PingResponse response = PingResponse.builder()
+                .data(Instant.now())
+                .build();
+        return Mono.just(response);
     }
 
 }

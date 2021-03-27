@@ -23,25 +23,9 @@
  */
 package io.jrb.labs.common.module.command.service;
 
-import reactor.core.publisher.Mono;
-
 /**
- * Defines an executor of commands.
+ * Marks a command response.
  */
-public interface CommandExecutor {
-
-    /**
-     * Executes a command.
-     *
-     * @param commandClass the command class
-     * @param request the command request
-     * @param <R> the command request type
-     * @param <T> the command response type
-     * @return the command response
-     */
-    <R extends CommandRequest, T extends CommandResponse> Mono<T> execute(
-            Class<? extends Command<R, T>> commandClass,
-            R request
-    );
+public interface CommandResponse {
 
 }

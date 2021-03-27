@@ -21,37 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package io.jrb.labs.common.module.command.service;
+package io.jrb.labs.common.module.command.service.command;
 
+import io.jrb.labs.common.module.command.service.CommandRequest;
 import lombok.Builder;
 import lombok.Value;
 
-import java.time.Instant;
-import java.util.Optional;
-
-/**
- * Provides a wrapper for a command service response.
- *
- * @param <T> the content type
- */
 @Value
 @Builder
-public class ServiceResult<T> {
-
-    T data;
-
-    Throwable exception;
-
-    Instant startTime;
-
-    Instant endTime;
-
-    public long getElapsedTime() {
-        final long startTimeEpochSecs = Optional.ofNullable(startTime).map(Instant::getEpochSecond).orElse(0L);
-        final long endTimeEpochSecs = Optional.ofNullable(endTime).map(Instant::getEpochSecond).orElse(0L);
-        return endTimeEpochSecs - startTimeEpochSecs;
-    }
-
-    public boolean hasException() { return exception != null; }
-
+public class PingRequest implements CommandRequest {
 }

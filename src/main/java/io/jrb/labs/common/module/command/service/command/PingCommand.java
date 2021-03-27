@@ -24,9 +24,6 @@
 package io.jrb.labs.common.module.command.service.command;
 
 import io.jrb.labs.common.module.command.service.Command;
-import io.jrb.labs.common.module.command.service.ServiceRequest;
 
-import java.time.Instant;
-
-public interface PingCommand extends Command<ServiceRequest, Instant> {
+public interface PingCommand extends Command<PingRequest, PingResponse> {
 }

@@ -32,7 +32,7 @@ import reactor.core.publisher.Mono;
  * @param <T> the response type
  */
 @FunctionalInterface
-public interface Command<R extends ServiceRequest, T> {
+public interface Command<R extends CommandRequest, T extends CommandResponse> {
 
     /**
      * Executes the command.

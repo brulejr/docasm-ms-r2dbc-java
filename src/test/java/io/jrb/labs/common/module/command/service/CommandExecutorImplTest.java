@@ -2,6 +2,7 @@ package io.jrb.labs.common.module.command.service;
 
 import io.jrb.labs.common.module.command.service.command.PingCommand;
 import io.jrb.labs.common.module.command.service.command.PingCommandImpl;
+import io.jrb.labs.common.module.command.service.command.PingRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -50,7 +51,7 @@ class CommandExecutorImplTest {
 
     @Test
     void testCommandExecutor() {
-        final ServiceRequest<?> request = ServiceRequest.builder().build();
+        final PingRequest request = PingRequest.builder().build();
         StepVerifier.create(commandExecutor.execute(PingCommand.class, request))
                 .expectNextMatches(result -> {
                     assertThat(result, is(notNullValue()));
